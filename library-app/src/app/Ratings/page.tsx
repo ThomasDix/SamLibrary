@@ -2,12 +2,18 @@ import Image from "next/image";
 
 import Navigation from '../components/Navigation'; // Nav
 
+import './page.css';
+
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <Navigation /> {/* Navigation Bar */}
-      <p> Ratings page</p>
+    <div className="background">
+      <div className="wrapper">
+        <div className="yer">
+          <Navigation /> {/* Navigation Bar */}
+          <p>Book Ratings</p>
+        </div>
+      </div>
     </div>
   );
 }

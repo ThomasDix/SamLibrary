@@ -1,0 +1,25 @@
+.background {
+    background-color: #FFDCCC;
+    margin: 0 auto;
+    padding: 1.2%;
+
+}
+
+.wrapper {
+    background-color: #B7B1F2;
+    border-radius: 25px;
+    border-width:1px;
+    border-color:black;
+}
+
+.yer{
+  display: grid; /* grid */
+  grid-template-rows: 20px 1fr 20px; /* grid-rows-[20px_1fr_20px] */
+  align-items: center; /* items-center */
+  justify-items: center; /* justify-items-center */
+  min-height: 100vh; /* min-h-screen */
+  padding: 2rem; /* p-8 */
+  padding-bottom: 5rem; /* pb-20 */
+  gap: 4rem; /* gap-16 */
+  font-family: var(--font-geist-sans); /* font-[family-name:var(--font-geist-sans)] */
+}

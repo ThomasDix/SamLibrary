@@ -3,6 +3,7 @@ import Image from "next/image";
 import Navigation from '../components/Navigation'; // Nav
 
 import './page.css';
+import BooksList from "../components/BooksList";
 
 
 export default function Home() {
@@ -11,6 +12,7 @@ export default function Home() {
       <div className="wrapper">
         <div className="yer">
           <Navigation /> {/* Navigation Bar */}
+          <BooksList /> {/* BooksList container */}
           <p>My Books!</p>
         </div>
       </div>

@@ -11,7 +11,7 @@ import Book from "./Book";
 const BooksList = () => {
     return (
         <div className="container">
-            <Book />
+            <Book/>
         </div>
     );
 };

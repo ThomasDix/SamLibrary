@@ -1,3 +1,32 @@
+.bookcon {
+    padding: 1rem;
+    display: flex;
+
+}
+
+.bookcard {
+
+    border: 1px solid #ccc;
+    padding: 1rem;
+    margin:1rem;
+    border-radius: 6px;
+    background-color: #B7B1F2;
+    width:50%;
+}
+
+.image-container{
+    width: 100px;
+    height: 200px;
+
+}
+
+.image-container img{
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+/*
 .bookcon{
     max-height:25%;
     max-width:25%;
@@ -9,4 +38,6 @@
     border-radius: 10px;
     border-width: 1px;
     border-color:black;
+    min-width:50px;
 }
+    */

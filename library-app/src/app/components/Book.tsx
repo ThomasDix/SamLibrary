@@ -18,6 +18,7 @@ type Book = {
 
 export default function Book() {
     const [books, setBooks] = useState<Book[]>([]);
+    const [openBookId, setOpenBookId] = useState<number | null>(null);
 
     useEffect(() => {
         fetch("http://localhost:8080/books")
@@ -26,19 +27,28 @@ export default function Book() {
             .catch(err => console.error("Failed to fetch books", err));
     }, []);
 
+    const toggleInfo = (bookId: number) => {
+        setOpenBookId(openBookId === bookId ? null : bookId);
+    }
+
     return (
         <div className="bookcon">
             {books.map(book => (
-                <div className="bookcard" key={book.bookId}>
-                    <h2>{book.title}</h2>
-                    <p><strong>Author:</strong> {book.authors}</p>
-                    <p><strong>Category:</strong> {book.categories}</p>
-                    <p><strong>Published:</strong> {book.publishedYear}</p>
-                    <p>{book.description}</p>
+                <button className="bookcard" key={book.bookId} onClick={() => toggleInfo(book.bookId)}>
                     <div className='image-container'>
                         <img src={book.thumbNail} alt={`${book.title} cover`} />
                     </div>
-                </div>
+                    <h2><strong>{book.title}</strong></h2>
+                    <p>{book.authors}</p>
+
+                    {openBookId === book.bookId && (
+                        <div className="additional-info">
+                            <p><strong>Category:</strong> {book.categories}</p>
+                            <p><strong>Published:</strong> {book.publishedYear}</p>
+                            <p>{book.description}</p>
+                        </div>
+                    )}
+                </button>
             ))}
         </div>
     );

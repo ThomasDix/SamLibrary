@@ -7,7 +7,5 @@ CREATE TABLE book (
     description TEXT,
     published_year INT,
     average_rating DOUBLE,
-    is_book_marked BOOLEAN,
-    is_checked_out BOOLEAN,
     user_id INT
 );

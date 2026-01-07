@@ -34,7 +34,7 @@ export default function Book() {
     return (
         <div className="bookcon">
             {books.map(book => (
-                <Link href={`/Book/${book.bookId}`} passHref className="bookcard" key={book.bookId}>
+                <Link href={`/books/${book.bookId}`} prefetch className="bookcard" key={book.bookId}>
                     <div className='image-container'>
                         <img src={book.thumbNail} alt={`${book.title} cover`} />
                     </div>

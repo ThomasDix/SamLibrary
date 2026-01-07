@@ -19,4 +19,9 @@ public class BookRepository {
         String sql = "SELECT * FROM book";
         return jdbcTemplate.query(sql, new BookRowMapper());
     }
+
+    public Book findById(int id) {
+        String sql = "SELECT * FROM book WHERE book_id = ?";
+        return jdbcTemplate.queryForObject(sql, new BookRowMapper(), id);
+    }
 }

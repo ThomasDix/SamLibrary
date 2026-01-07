@@ -34,21 +34,13 @@ export default function Book() {
     return (
         <div className="bookcon">
             {books.map(book => (
-                <button className="bookcard" key={book.bookId} onClick={() => toggleInfo(book.bookId)}>
+                <Link href={`/Book/${book.bookId}`} passHref className="bookcard" key={book.bookId}>
                     <div className='image-container'>
                         <img src={book.thumbNail} alt={`${book.title} cover`} />
                     </div>
                     <h2><strong>{book.title}</strong></h2>
                     <p>{book.authors}</p>
-
-                    {openBookId === book.bookId && (
-                        <div className="additional-info">
-                            <p><strong>Category:</strong> {book.categories}</p>
-                            <p><strong>Published:</strong> {book.publishedYear}</p>
-                            <p>{book.description}</p>
-                        </div>
-                    )}
-                </button>
+                </Link>
             ))}
         </div>
     );

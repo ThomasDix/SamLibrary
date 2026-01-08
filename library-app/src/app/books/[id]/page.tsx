@@ -1,4 +1,5 @@
 import Navigation from '../../components/Navigation'; // Nav
+import Book from "../../components/Book";
 
 
 type Book = {

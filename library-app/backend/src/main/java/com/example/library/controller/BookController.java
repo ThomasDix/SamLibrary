@@ -26,4 +26,9 @@ public class BookController {
     public Book getBookById(@PathVariable int id) {
         return bookService.getBookById(id);
     }
+
+    @GetMapping("/search")
+    public List<Book> searchBooksByTitle(@RequestParam String title) {
+        return bookService.searchBooksByTitle(title);
+    }
 }

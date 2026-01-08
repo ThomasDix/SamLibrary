@@ -11,3 +11,16 @@
     border-color:black;
     
 }
+
+.books-list {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.search-bar {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}

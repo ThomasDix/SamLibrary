@@ -12,7 +12,7 @@
     border-color:black; 
 }
 
-.yer{
+.yer {
   display: grid; /* grid */
   grid-template-rows: 20px 1fr 20px; /* grid-rows-[20px_1fr_20px] */
   align-items: center; /* items-center */
@@ -25,12 +25,13 @@
 }
 
 .book-detail-card {
+    background-color: #FDB7EA;
     padding: 2%;
     min-height: 50%;
     display: flex;
     flex-direction: row;
     justify-content: left;
-    background-color: #FDB7EA;
+   
     outline: none;
     border-radius: 10px;
     border-width: 1px;

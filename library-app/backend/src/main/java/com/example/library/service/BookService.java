@@ -2,7 +2,9 @@ package com.example.library.service;
 
 import com.example.library.model.Book;
 import com.example.library.repository.BookRepository;
+import com.example.library.service.BookService;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
@@ -22,4 +24,14 @@ public class BookService {
     public Book getBookById(int id) {
         return bookRepository.findById(id);
     }
+
+    public List<Book> searchBooksByTitle(String title) {
+        if (title == null || title.isEmpty()) {
+            return bookRepository.findAll();
+        }
+
+        return bookRepository.searchByTitle(title);
+    }
+
+
 }

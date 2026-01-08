@@ -18,7 +18,6 @@ type Book = {
 
 export default function Book() {
     const [books, setBooks] = useState<Book[]>([]);
-    const [openBookId, setOpenBookId] = useState<number | null>(null);
 
     useEffect(() => {
         fetch("http://localhost:8080/books")
@@ -26,10 +25,6 @@ export default function Book() {
             .then((data: Book[]) => setBooks(data))
             .catch(err => console.error("Failed to fetch books", err));
     }, []);
-
-    const toggleInfo = (bookId: number) => {
-        setOpenBookId(openBookId === bookId ? null : bookId);
-    }
 
     return (
         <div className="bookcon">

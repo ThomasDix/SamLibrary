@@ -20,7 +20,7 @@ export default function Book() {
     const [books, setBooks] = useState<Book[]>([]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/books")
+        fetch("http://localhost:8080/api/books/search?query=the+long+walk")
             .then(res => res.json())
             .then((data: Book[]) => setBooks(data))
             .catch(err => console.error("Failed to fetch books", err));

@@ -16,17 +16,19 @@ public class Book {
     private String author;
     private String isbn;
     private Integer publishYear;
+    private String thumbnail;
 
     private Integer userId;
 
     public Book() {}
 
-    public Book(String title, String author, String isbn, Integer publishYear, Integer userId) {
+    public Book(String title, String author, String isbn, Integer publishYear, Integer userId, String thumbnail) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
         this.publishYear = publishYear;
         this.userId = userId;
+        this.thumbnail = thumbnail;
     }
 
     public Long getId() {
@@ -51,5 +53,9 @@ public class Book {
 
     public Integer getUserId() {
         return userId;
+    }
+    
+    public String getThumbnail() {
+        return thumbnail;
     }
 }

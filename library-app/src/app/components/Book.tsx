@@ -5,13 +5,13 @@ import Link from "next/link";
 import "./Book.Module.css";
 
 type Book = {
-    bookId: number;
+    id: number;
     title: string;
-    authors: string;
+    author: string;
     categories: string;
-    thumbNail: string;
+    thumbnail: string;
     description: string;
-    publishedYear: number;
+    publishYear: number;
     averageRating: number;
     userId: number | null;
 };
@@ -20,7 +20,7 @@ export default function Book() {
     const [books, setBooks] = useState<Book[]>([]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/books/search?query=the+long+walk")
+        fetch("http://localhost:8080/api/books/search?query=he-who-fights-with-monsters")
             .then(res => res.json())
             .then((data: Book[]) => setBooks(data))
             .catch(err => console.error("Failed to fetch books", err));
@@ -29,12 +29,12 @@ export default function Book() {
     return (
         <div className="bookcon">
             {books.map(book => (
-                <Link href={`/books/${book.bookId}`} prefetch className="bookcard" key={book.bookId}>
+                <Link href={`/books/${book.id}`} prefetch className="bookcard" key={book.id}>
                     <div className='image-container'>
-                        <img src={book.thumbNail} alt={`${book.title} cover`} />
+                        <img src={book.thumbnail} alt={`${book.title} cover`} />
                     </div>
                     <h2><strong>{book.title}</strong></h2>
-                    <p>{book.authors}</p>
+                    <p>{book.author}</p>
                 </Link>
             ))}
         </div>

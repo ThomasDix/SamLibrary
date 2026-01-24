@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from 'react';
-import BookList from '../components/BooksList';
+import BooksList from '../components/BooksList';
 
 import Navigation from '../components/Navigation'; // Nav
 
@@ -13,6 +13,7 @@ export default function Home() {
       <div className="wrapper">
         <div className="yer">
           <Navigation /> {/* Navigation Bar */}
+          <BooksList /> {/* BooksList container */}
           <h1>Library</h1>
           
         </div>

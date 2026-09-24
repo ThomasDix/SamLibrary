@@ -1,21 +1,22 @@
 import React from 'react';
 import Link from "next/link"
+import styles from "./Navigation.module.css";
 
-import './Navigation.Module.css';
 
 
 const Navigation = () => {
     return (
-        <nav className = "navbar">
+        <nav className={styles.navbar}>
             <Link href="/main" passHref>
-                <p className="item">Books</p>
+                <p className={styles.item}>Books</p>
             </Link>
             <Link href="/MyBooks" passHref>
-                <p className="item">My Books</p>
+                <p className={styles.item}>My Books</p>
             </Link>
             <Link href="/Wishlist" passHref>
-                <p className="item">Wishlist</p>
+                <p className={styles.item}>Wishlist</p>
             </Link>
+            
         </nav>
     );
 };

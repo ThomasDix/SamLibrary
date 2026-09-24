@@ -4,9 +4,6 @@ import BookList from '../components/BooksList';
 
 import Navigation from '../components/Navigation'; // Nav
 
-import './page.css';
-
-
 export default function Home() {
   return (
     <div className="background">

@@ -58,7 +58,7 @@ public class BookService {
             JsonNode root = objectMapper.readTree(body);
             JsonNode docs = root.get("docs");
 
-            for(int i = 0; i < docs.size() && i < 10; i++) {
+            for(int i = 0; i < docs.size() && i < 12; i++) {
                 JsonNode doc = docs.get(i);
                 String title = doc.has("title") ? doc.get("title").asText() : "Unknown Title";
                 String author = doc.has("author_name") ? doc.get("author_name").get(0).asText() : "Unknown Author";

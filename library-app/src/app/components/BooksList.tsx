@@ -1,10 +1,25 @@
-import "./BooksList.Module.css";
+"use client";
+import { useState, type KeyboardEvent } from "react";
+import "./BooksList.module.css";
 import Book from "./Book";
+import styles from "./BooksList.module.css";
+
 
 const BooksList = () => {
-    return (
-        <div className="books-list">
-            <div className="search-bar">
+
+    const [searchInput, setSearchInput] = useState("");
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const handleSearch = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        setSearchQuery(searchInput);
+    }
+};
+
+     return (
+        <div className={styles.booksList}>
+            <div className={styles.searchBar}>
                 <select aria-label="search by">
                     <option value="all">All</option>
                     <option value="title">Title</option>
@@ -12,17 +27,18 @@ const BooksList = () => {
                     <option value="author">Author(s)</option>
                 </select>
 
-                <form action="/search" method="get">
-                    <input
-                        name="title"
-                        type="text"
-                        placeholder="Search Titles"
-                    />
-                </form>
+                <input
+                    name="title"
+                    type="text"
+                    placeholder="Search Titles"
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    onKeyDown={handleSearch}
+                />
             </div>
 
-            <div className="container">
-                <Book />
+            <div className={styles.container}>
+                <Book searchQuery={searchQuery} />
             </div>
         </div>
     );

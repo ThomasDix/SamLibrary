@@ -5,42 +5,62 @@ import Link from "next/link";
 import styles from "./Book.module.css";
 
 type Book = {
+    isbn?: string;
     id: number;
     title: string;
     author: string;
     categories: string;
     thumbnail: string;
-    description: string;
     publishYear: number;
     averageRating: number;
     userId: number | null;
+    openLibraryKey: string | null;
 };
+
+type BookSearchResponse = {
+    books: Book[];
+    page: number;
+    limit: number;
+    totalResults: number;
+};
+
 
 type BookProps = {
     searchQuery: string;
+    page: number;
+    setPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export default function Book({ searchQuery }: BookProps) {
+
+export default function Book({ searchQuery, page, setPage }: BookProps) {
 
     const [books, setBooks] = useState<Book[]>([]);
+    const [totalResults, setTotalResults] = useState(0);
 
     useEffect(() => {
 
-         if (!searchQuery.trim()) {
-        setBooks([]);
-        return;
-    }
+        if (!searchQuery.trim()) {
+            setBooks([]);
+            setTotalResults(0);
+            return;
+        }
 
-    fetch(`http://localhost:8080/books/search?query=${encodeURIComponent(searchQuery)}`)
+    fetch(`http://localhost:8080/books/search?query=${encodeURIComponent(searchQuery)}&page=${page}&limit=12`)
         .then(res => {
             if (!res.ok) {
                 throw new Error(`HTTP error: ${res.status}`);
             }
             return res.json();
         })
-        .then((data: Book[]) => setBooks(data))
-        .catch(err => console.error("Failed to fetch books", err));
-}, [searchQuery]);
+        .then((data: BookSearchResponse) => {
+            setBooks(data.books);
+            setTotalResults(data.totalResults);
+        })
+.catch(err => console.error("Failed to fetch books", err));
+}, [searchQuery, page]);
+
+const limit = 12;
+const totalPages = Math.ceil(totalResults / limit);
 
 
 
@@ -58,16 +78,41 @@ export default function Book({ searchQuery }: BookProps) {
 
     return (
         <div className={styles.bookcon}>
-            {books.map(book => (
-                <Link href={`/books/${book.id}`} prefetch className={styles.bookcard} key={book.id}>
+            {books.map((book) => (
+                <Link
+                    href={`/books/${encodeURIComponent(book.openLibraryKey ?? "")}`} prefetch className={styles.bookcard} key={book.openLibraryKey}>
                     <div className={styles.imagecontainer}>
                         <img className={styles.image} src={urlDisp(book)} alt={`${book.title} cover`} />
                     </div>
                     <h2><strong>{book.title}</strong></h2>
                     <p>{book.author}</p>
-                    <p>{book.description}</p>
+                    <button className={styles.button}>Add to Library</button>
+                    <button className={styles.button}>View Details</button>
                 </Link>
             ))}
+
+
+
+            <div className={styles.pagination}>
+                <button className={styles.button}
+                    onClick={() => setPage(page - 1)}
+                    disabled={page === 1}
+                >
+                    Previous
+                </button>
+
+                <span>
+                    Page {page} of {totalPages}
+                </span>
+
+                <button className={styles.button}
+                    onClick={() => setPage(page + 1)}
+                    disabled={page >= totalPages}
+                >
+                    Next
+                </button>
+
+            </div>
         </div>
     );
 }

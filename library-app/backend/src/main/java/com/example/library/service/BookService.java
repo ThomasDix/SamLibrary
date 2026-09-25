@@ -16,6 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Service
 public class BookService {
 
@@ -27,17 +28,17 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public List<Book> searchBooks(String query) {
+    public BookSearchResponse searchBooks(String query, int page, int limit) {
         List<Book> resultBooks = new ArrayList<>();
 
         try{
-            
-            String encodedQuery = UriUtils.encodeQuery(query, StandardCharsets.UTF_8);
-            String url = "https://openlibrary.org/search.json?q=" + encodedQuery;
 
-            if (query.length() < 3) {
-                throw new IllegalArgumentException("Search query must be at least 3 characters");
-            }
+            query = query.replace(" ", "+");
+            String encodedQuery = UriUtils.encodeQueryParam(query, StandardCharsets.UTF_8);
+            String url = "https://openlibrary.org/search.json" 
+            + "?q=" + encodedQuery 
+            + "&page=" + page
+            + "&limit=100";
 
             //Ugh
             HttpHeaders headers = new HttpHeaders();
@@ -53,29 +54,35 @@ public class BookService {
                     String.class
             );
 
-            String body = response.getBody();
+            JsonNode root = objectMapper.readTree(response.getBody());
 
-            JsonNode root = objectMapper.readTree(body);
+            int totalResults = root.has("numFound") ? root.get("numFound").asInt() : 0;
             JsonNode docs = root.get("docs");
 
-            for(int i = 0; i < docs.size() && i < 12; i++) {
+            for(int i = 0; i < docs.size(); i++) {
                 JsonNode doc = docs.get(i);
+                
+                String openLibraryKey = doc.has("key") ? doc.get("key").asText() : null;
                 String title = doc.has("title") ? doc.get("title").asText() : "Unknown Title";
                 String author = doc.has("author_name") ? doc.get("author_name").get(0).asText() : "Unknown Author";
                 String isbn = doc.has("isbn") ? doc.get("isbn").get(0).asText() : null;
                 Integer publishYear = doc.has("first_publish_year") ? doc.get("first_publish_year").asInt() : null;
                 String thumbnail = doc.has("cover_i") ? "https://covers.openlibrary.org/b/id/" + doc.get("cover_i").asText() + "-M.jpg" : null;
 
-                Book book = new Book(title, author, isbn, publishYear, null, thumbnail);
-                bookRepository.save(book);
+                Book book = new Book(title, author, isbn, publishYear, null, thumbnail, openLibraryKey);
                 resultBooks.add(book);
+                
             } //for
+
+            return new BookSearchResponse(resultBooks, page, limit, totalResults);
 
         } catch (Exception e) {
             e.printStackTrace();
+
+            return new BookSearchResponse(resultBooks, page, limit, 0);
         }
 
-        return resultBooks;
+        
     }
 
     public List<Book> getAllBooks() {

@@ -1,6 +1,5 @@
 "use client";
 import { useState, type KeyboardEvent } from "react";
-import "./BooksList.module.css";
 import Book from "./Book";
 import styles from "./BooksList.module.css";
 
@@ -9,10 +8,13 @@ const BooksList = () => {
 
     const [searchInput, setSearchInput] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
+    const [page, setPage] = useState(1);
 
     const handleSearch = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
         e.preventDefault();
+
+        setPage(1);
         setSearchQuery(searchInput);
     }
 };
@@ -38,7 +40,10 @@ const BooksList = () => {
             </div>
 
             <div className={styles.container}>
-                <Book searchQuery={searchQuery} />
+                <Book searchQuery={searchQuery} 
+                page={page} 
+                setPage={setPage}
+                />
             </div>
         </div>
     );

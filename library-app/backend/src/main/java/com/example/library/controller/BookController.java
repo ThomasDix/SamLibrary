@@ -2,6 +2,7 @@ package com.example.library.controller;
 
 import com.example.library.model.Book;
 import com.example.library.repository.BookRepository;
+import com.example.library.service.BookSearchResponse;
 import com.example.library.service.BookService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +47,11 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    public List<Book> searchBooks(@RequestParam String query) {
-        return bookService.searchBooks(query);
+    public BookSearchResponse searchBooks(
+    @RequestParam String query,
+    @RequestParam(defaultValue = "1") int page, 
+    @RequestParam(defaultValue = "12") int limit) {
+        return bookService.searchBooks(query, page, limit);
     }
 
     @GetMapping("/test")

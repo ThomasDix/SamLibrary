@@ -17,6 +17,9 @@ public class Book {
     private String isbn;
     private Integer publishYear;
     private String thumbnail;
+    private String openLibraryKey;
+    private Integer something;
+
 
     private Integer userId;
 
@@ -29,7 +32,26 @@ public class Book {
         this.publishYear = publishYear;
         this.userId = userId;
         this.thumbnail = thumbnail;
+        
     }
+
+    public Book(
+        String title,
+        String author,
+        String isbn,
+        Integer publishYear,
+        Integer something,
+        String thumbnail,
+        String openLibraryKey
+) {
+    this.title = title;
+    this.author = author;
+    this.isbn = isbn;
+    this.publishYear = publishYear;
+    this.something = something;
+    this.thumbnail = thumbnail;
+    this.openLibraryKey = openLibraryKey;
+}
 
     public Long getId() {
         return id;
@@ -58,5 +80,10 @@ public class Book {
     public String getThumbnail() {
         return thumbnail;
     }
+
+    public String getOpenLibraryKey() {
+        return openLibraryKey;
+    }
+    
 
 }

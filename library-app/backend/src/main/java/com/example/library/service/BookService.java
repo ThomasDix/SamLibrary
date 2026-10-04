@@ -39,6 +39,7 @@ public class BookService {
             + "?q=" + encodedQuery 
             + "&page=" + page
             + "&limit=100";
+            + "&limit=" + limit;
 
             //Ugh
             HttpHeaders headers = new HttpHeaders();

@@ -3,6 +3,8 @@ package com.example.library.service;
 import com.example.library.model.Book;
 import java.util.List;
 
+import org.apache.catalina.connector.Response;
+
 public class BookSearchResponse {
     
     private List<Book> books;
@@ -32,5 +34,7 @@ public class BookSearchResponse {
     public int getTotalResults() {
         return totalResults;
     }
+
+    
 
 }

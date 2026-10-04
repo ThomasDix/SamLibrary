@@ -1,27 +1,33 @@
 package com.example.library.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "books")
 public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String title;
+
     private String author;
+
     private String isbn;
+
     private Integer publishYear;
+
     private String thumbnail;
+
+    @Column(unique = true)
     private String openLibraryKey;
-    private Integer something;
-
-
-    private Integer userId;
 
     public Book() {}
 
@@ -30,7 +36,6 @@ public class Book {
         this.author = author;
         this.isbn = isbn;
         this.publishYear = publishYear;
-        this.userId = userId;
         this.thumbnail = thumbnail;
         
     }
@@ -48,7 +53,6 @@ public class Book {
     this.author = author;
     this.isbn = isbn;
     this.publishYear = publishYear;
-    this.something = something;
     this.thumbnail = thumbnail;
     this.openLibraryKey = openLibraryKey;
 }
@@ -71,10 +75,6 @@ public class Book {
 
     public Integer getPublishYear() {
         return publishYear;
-    }
-
-    public Integer getUserId() {
-        return userId;
     }
     
     public String getThumbnail() {

@@ -13,7 +13,6 @@ type Book = {
     thumbnail: string;
     publishYear: number;
     averageRating: number;
-    userId: number | null;
     openLibraryKey: string | null;
 };
 
@@ -32,7 +31,7 @@ type BookProps = {
 };
 
 
-export default function Book({ searchQuery, page, setPage }: BookProps) {
+export default function BookResults({ searchQuery, page, setPage }: BookProps) {
 
     const [books, setBooks] = useState<Book[]>([]);
     const [totalResults, setTotalResults] = useState(0);
@@ -63,35 +62,48 @@ const limit = 12;
 const totalPages = Math.ceil(totalResults / limit);
 
 
-
-/*
-    useEffect(() => {
-        fetch("http://localhost:8080/books")
-            .then(res => res.json())
-            .then(setBooks);
-        }, []);
-*/
-
     const urlDisp = (props: Book) => {
         return props.thumbnail ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2vueR0dV-8LWMPHYqvYB_xB83b0d4lkQfiv2POxDoGa7odTy4UpSQfKDu&s=10";
+    };
+
+
+    const addBook = async (book: Book) => {
+        try {
+            const response = await fetch("http://localhost:8080/books", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(book)
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error: ${response.status}`);
+            }
+
+            const newBook = await response.json();
+            return newBook;
+
+        } catch (error) {
+            console.error("Failed to add book", error);
+            throw error;
+        }
     };
 
     return (
         <div className={styles.bookcon}>
             {books.map((book) => (
-                <Link
-                    href={`/books/${encodeURIComponent(book.openLibraryKey ?? "")}`} prefetch className={styles.bookcard} key={book.openLibraryKey}>
+                <div className={styles.bookcard} key={book.openLibraryKey}>
                     <div className={styles.imagecontainer}>
                         <img className={styles.image} src={urlDisp(book)} alt={`${book.title} cover`} />
                     </div>
                     <h2><strong>{book.title}</strong></h2>
                     <p>{book.author}</p>
-                    <button className={styles.button}>Add to Library</button>
-                    <button className={styles.button}>View Details</button>
-                </Link>
+                    <button className={styles.button} onClick={() => addBook(book)}>
+                        Add to Library
+                    </button>
+                </div>
             ))}
-
-
 
             <div className={styles.pagination}>
                 <button className={styles.button}

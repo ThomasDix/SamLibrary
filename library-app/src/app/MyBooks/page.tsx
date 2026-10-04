@@ -6,6 +6,8 @@ import styles from "./page.module.css";
 
 import BooksList from "../components/BooksList";
 
+import MyBooksList from "../components/MyBooksList";
+
 
 export default function Home() {
   return (
@@ -13,7 +15,7 @@ export default function Home() {
       <div className={styles.wrapper}>
         <div className={styles.yer}>
           <Navigation /> {/* Navigation Bar */}
-          <BooksList /> {/* BooksList container */}
+          <MyBooksList /> {/* BooksList container */}
           <p>My Books!</p>
         </div>
       </div>

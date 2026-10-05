@@ -3,23 +3,21 @@ package com.example.library.service;
 import com.example.library.model.Book;
 import java.util.List;
 
-import org.apache.catalina.connector.Response;
-
 public class BookSearchResponse {
     
-    private List<Book> books;
+    private List<SearchBook> books;
     private int page;
     private int limit;
     private int totalResults;
 
-    public BookSearchResponse(List<Book> books, int page, int limit, int totalResults) {
+    public BookSearchResponse(List<SearchBook> books, int page, int limit, int totalResults) {
         this.books = books;
         this.page = page;
         this.limit = limit;
         this.totalResults = totalResults;
     }
 
-    public List<Book> getBooks() {
+    public List<SearchBook> getBooks() {
         return books;
     }
 

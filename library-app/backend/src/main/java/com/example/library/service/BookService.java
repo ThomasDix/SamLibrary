@@ -29,7 +29,7 @@ public class BookService {
     }
 
     public BookSearchResponse searchBooks(String query, int page, int limit) {
-        List<Book> resultBooks = new ArrayList<>();
+        List<SearchBook> resultBooks = new ArrayList<>();
 
         try{
 
@@ -38,7 +38,6 @@ public class BookService {
             String url = "https://openlibrary.org/search.json" 
             + "?q=" + encodedQuery 
             + "&page=" + page
-            + "&limit=100";
             + "&limit=" + limit;
 
             //Ugh
@@ -70,7 +69,9 @@ public class BookService {
                 Integer publishYear = doc.has("first_publish_year") ? doc.get("first_publish_year").asInt() : null;
                 String thumbnail = doc.has("cover_i") ? "https://covers.openlibrary.org/b/id/" + doc.get("cover_i").asText() + "-M.jpg" : null;
 
-                Book book = new Book(title, author, isbn, publishYear, null, thumbnail, openLibraryKey);
+                boolean isSaved = openLibraryKey != null && bookRepository.existsByOpenLibraryKey( openLibraryKey );
+                
+                SearchBook book = new SearchBook( null, title, author, isbn, publishYear, thumbnail, openLibraryKey, isSaved );
                 resultBooks.add(book);
                 
             } //for
@@ -93,6 +94,20 @@ public class BookService {
     public Book getBookById(Long id) {
         return bookRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Book not found with id: " + id));
+    }
+
+    public void deleteBookById(Long id) {
+        Book book = bookRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Book not found with id: " + id));
+
+        bookRepository.delete(book);
+    }
+
+    public void deleteBookByOpenLibraryKey(String openLibraryKey) {
+        Book book = bookRepository.findByOpenLibraryKey(openLibraryKey)
+            .orElseThrow(() -> new RuntimeException("Book not found with Open Library Key: " + openLibraryKey));
+
+        bookRepository.delete(book);
     }
 
 }

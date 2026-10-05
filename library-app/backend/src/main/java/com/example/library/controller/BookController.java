@@ -7,13 +7,21 @@ import com.example.library.service.BookService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/books")
-@CrossOrigin(origins = "http://localhost:3000")
-public class BookController {
+@CrossOrigin(
+    origins = "http://localhost:3000",
+    methods = {
+        RequestMethod.GET,
+        RequestMethod.POST,
+        RequestMethod.DELETE,
+        RequestMethod.OPTIONS
+    }
+)public class BookController {
 
     private final BookService bookService;
     
@@ -28,6 +36,11 @@ public class BookController {
     @PostMapping
     public Book addBook(@RequestBody Book book) {
         return repo.save(book);
+    }
+
+    @DeleteMapping("/by-key")
+    public void removeBook(@RequestParam String openLibraryKey) {
+        bookService.deleteBookByOpenLibraryKey(openLibraryKey);
     }
 
     public BookController(BookService bookService) {

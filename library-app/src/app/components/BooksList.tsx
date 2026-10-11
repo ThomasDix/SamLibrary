@@ -41,7 +41,7 @@ const BooksList = () => {
 
             <div className={styles.container}>
                 <Book searchQuery={searchQuery} 
-                page={page} 
+                page={page}
                 setPage={setPage}
                 />
             </div>

@@ -150,10 +150,7 @@ return (
 
         {books.map((book) => (
 
-            <div
-                className={styles.bookcard}
-                key={book.openLibraryKey}
-            >
+            <div className={styles.bookcard} key={book.openLibraryKey}>
 
                 <Link
                     href={`/books/${encodeURIComponent(book.openLibraryKey ?? "")}`}

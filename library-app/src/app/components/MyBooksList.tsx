@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import styles from "./BooksList.module.css";
+import styles from "./MyBooksList.module.css";
 
 type Book = {
     id: number;
@@ -18,6 +18,9 @@ export default function MyBooksList() {
     const [books, setBooks] = useState<Book[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+
+    const [page, setPage] = useState(1);
+    const booksPerPage = 12;
 
     useEffect(() => {
         fetch("http://localhost:8080/books")
@@ -39,6 +42,11 @@ export default function MyBooksList() {
                 setLoading(false);
             });
     }, []);
+
+    const totalPages = Math.ceil(books.length / booksPerPage);
+    const startIndex = (page - 1) * booksPerPage; 
+
+    const currentBooks = books.slice(startIndex, startIndex + booksPerPage);
 
     const urlDisp = (book: Book) => {
         return (
@@ -73,6 +81,11 @@ export default function MyBooksList() {
                         currentBook.openLibraryKey !== book.openLibraryKey
                 )
             );
+
+            setPage((currentPage) =>
+                Math.min(currentPage, Math.ceil((books.length - 1) / booksPerPage))
+            )
+
         } catch (error) {
             console.error("Failed to remove book:", error);
         }
@@ -91,13 +104,15 @@ export default function MyBooksList() {
     }
 
     return (
-        <div className={styles.container}>
-            {books.map((book) => (
+        <div className={styles.booksList}>
+            <div className={styles.container}>
+        <div className={styles.bookcon}>
+        
+            {currentBooks.map((book) => (
+                
                 <div className={styles.bookcard} key={book.id}>
                     <Link
-                        href={`/books/${encodeURIComponent(
-                            book.openLibraryKey ?? ""
-                        )}`}
+                        href={`/books/${encodeURIComponent(book.openLibraryKey ?? "")}`}
                         prefetch
                     >
                         <div className={styles.imagecontainer}>
@@ -123,7 +138,32 @@ export default function MyBooksList() {
                     </button>
                 </div>
             ))}
+        
+
+        <div className={styles.pagination}>
+            <button
+                className={styles.button}
+                onClick={() => setPage((current) => current - 1)}
+                disabled={page === 1}
+            >
+                Previous
+            </button>
+
+            <span>
+                Page {page} of {totalPages}
+            </span>
+
+            <button
+                className={styles.button}
+                onClick={() => setPage((currentPage) => currentPage + 1)}
+                disabled={page === totalPages}
+            >
+                Next
+            </button>
         </div>
+        </div>   
+        </div>   
+        </div>  
     );
 }
 

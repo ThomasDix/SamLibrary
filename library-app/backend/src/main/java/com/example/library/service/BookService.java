@@ -83,7 +83,6 @@ public class BookService {
 
             return new BookSearchResponse(resultBooks, page, limit, 0);
         }
-
         
     }
 

@@ -1,21 +1,15 @@
 .container{
-    padding: 2%;
-    min-height: 50%;
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1rem;
     background-color: #FDB7EA;
-    outline: none;
     border-radius: 10px;
-    border-width: 1px;
-    border-color:black;
-    
+    border: 1px solid #000000;
 }
 
 .books-list {
-    justify-content: center;
-    display: flex;
-    flex-wrap: wrap;
+    width: 100%;
+    min-width: 0;
 }
 
 .search-bar {
